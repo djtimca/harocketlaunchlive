@@ -34,7 +34,7 @@ Enjoy!
 
 You can easily display the data using the custom:button-card lovelace template from HACS:
 
-<img src="https://github.com/djtimca/harocketlaunchlive/images/lovelace.png">
+<img src="https://github.com/djtimca/harocketlaunchlive/blob/master/images/lovelace.png?raw=true">
 
 ```
 type: vertical-stack
