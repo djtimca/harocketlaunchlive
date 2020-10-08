@@ -29,3 +29,338 @@ Search for Rocket Launch Live and you will see the integration available.
 Click add, confirm you want to install, and voila... you have the status of the next 5 launches as sensors in your Home Assistant.
 
 Enjoy!
+
+### Display the data using the custom:button-card
+
+You can easily display the data using the custom:button-card lovelace template from HACS:
+
+```
+type: vertical-stack
+title: Next 5 Rocket Launches
+cards:
+  - type: 'custom:button-card'
+    entity: sensor.rocket_launch_1
+    show_name: false
+    show_state: true
+    show_icon: false
+    layout: icon_state
+    styles:
+      card:
+        - font-size: 12px
+        - padding: 10px
+      grid:
+        - grid-template-areas: >-
+            "s" "provider" "vehicle" "launch_pad" "location" "target_date"
+            "tags"
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content min-content
+      state:
+        - font-weight: bold
+        - font-size: 16px
+        - align-self: start
+        - justify-self: start
+      custom_fields:
+        provider:
+          - align-self: start
+          - justify-self: start
+        vehicle:
+          - align-self: start
+          - justify-self: start
+        launch_pad:
+          - align-self: start
+          - justify-self: start
+        location:
+          - align-self: start
+          - justify-self: start
+        target_date:
+          - align-self: start
+          - justify-self: start
+        tags:
+          - align-self: start
+          - justify-self: start
+    custom_fields:
+      provider: |
+        [[[
+          return `Provider: ${states['sensor.rocket_launch_1'].attributes["provider"]}`
+        ]]]
+      vehicle: |
+        [[[
+          return `Vehicle: ${states['sensor.rocket_launch_1'].attributes['vehicle']}`
+        ]]]
+      launch_pad: |
+        [[[
+          return `Launch Pad: ${states['sensor.rocket_launch_1'].attributes['launch_pad']}`
+        ]]]
+      location: |
+        [[[
+          return `Location: ${states['sensor.rocket_launch_1'].attributes['launch_location']}`
+        ]]]
+      target_date: |
+        [[[
+          return `Target Date: ${states['sensor.rocket_launch_1'].attributes['launch_date_target']}`
+        ]]]
+      tags: |
+        [[[
+          return `Tags: ${states['sensor.rocket_launch_1'].attributes['tags']}`
+        ]]]
+  - type: 'custom:button-card'
+    entity: sensor.rocket_launch_2
+    show_name: false
+    show_state: true
+    show_icon: false
+    layout: icon_state
+    styles:
+      card:
+        - font-size: 12px
+        - padding: 10px
+      grid:
+        - grid-template-areas: >-
+            "s" "provider" "vehicle" "launch_pad" "location" "target_date"
+            "tags"
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content min-content
+      state:
+        - font-weight: bold
+        - font-size: 16px
+        - align-self: start
+        - justify-self: start
+      custom_fields:
+        provider:
+          - align-self: start
+          - justify-self: start
+        vehicle:
+          - align-self: start
+          - justify-self: start
+        launch_pad:
+          - align-self: start
+          - justify-self: start
+        location:
+          - align-self: start
+          - justify-self: start
+        target_date:
+          - align-self: start
+          - justify-self: start
+        tags:
+          - align-self: start
+          - justify-self: start
+    custom_fields:
+      provider: |
+        [[[
+          return `Provider: ${states['sensor.rocket_launch_2'].attributes["provider"]}`
+        ]]]
+      vehicle: |
+        [[[
+          return `Vehicle: ${states['sensor.rocket_launch_2'].attributes['vehicle']}`
+        ]]]
+      launch_pad: |
+        [[[
+          return `Launch Pad: ${states['sensor.rocket_launch_2'].attributes['launch_pad']}`
+        ]]]
+      location: |
+        [[[
+          return `Location: ${states['sensor.rocket_launch_2'].attributes['launch_location']}`
+        ]]]
+      target_date: |
+        [[[
+          return `Target Date: ${states['sensor.rocket_launch_2'].attributes['launch_date_target']}`
+        ]]]
+      tags: |
+        [[[
+          return `Tags: ${states['sensor.rocket_launch_2'].attributes['tags']}`
+        ]]]
+  - type: 'custom:button-card'
+    entity: sensor.rocket_launch_3
+    show_name: false
+    show_state: true
+    show_icon: false
+    layout: icon_state
+    styles:
+      card:
+        - font-size: 12px
+        - padding: 10px
+      grid:
+        - grid-template-areas: >-
+            "s" "provider" "vehicle" "launch_pad" "location" "target_date"
+            "tags"
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content min-content
+      state:
+        - font-weight: bold
+        - font-size: 16px
+        - align-self: start
+        - justify-self: start
+      custom_fields:
+        provider:
+          - align-self: start
+          - justify-self: start
+        vehicle:
+          - align-self: start
+          - justify-self: start
+        launch_pad:
+          - align-self: start
+          - justify-self: start
+        location:
+          - align-self: start
+          - justify-self: start
+        target_date:
+          - align-self: start
+          - justify-self: start
+        tags:
+          - align-self: start
+          - justify-self: start
+    custom_fields:
+      provider: |
+        [[[
+          return `Provider: ${states['sensor.rocket_launch_3'].attributes["provider"]}`
+        ]]]
+      vehicle: |
+        [[[
+          return `Vehicle: ${states['sensor.rocket_launch_3'].attributes['vehicle']}`
+        ]]]
+      launch_pad: |
+        [[[
+          return `Launch Pad: ${states['sensor.rocket_launch_3'].attributes['launch_pad']}`
+        ]]]
+      location: |
+        [[[
+          return `Location: ${states['sensor.rocket_launch_3'].attributes['launch_location']}`
+        ]]]
+      target_date: |
+        [[[
+          return `Target Date: ${states['sensor.rocket_launch_3'].attributes['launch_date_target']}`
+        ]]]
+      tags: |
+        [[[
+          return `Tags: ${states['sensor.rocket_launch_3'].attributes['tags']}`
+        ]]]
+  - type: 'custom:button-card'
+    entity: sensor.rocket_launch_4
+    show_name: false
+    show_state: true
+    show_icon: false
+    layout: icon_state
+    styles:
+      card:
+        - font-size: 12px
+        - padding: 10px
+      grid:
+        - grid-template-areas: >-
+            "s" "provider" "vehicle" "launch_pad" "location" "target_date"
+            "tags"
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content min-content
+      state:
+        - font-weight: bold
+        - font-size: 16px
+        - align-self: start
+        - justify-self: start
+      custom_fields:
+        provider:
+          - align-self: start
+          - justify-self: start
+        vehicle:
+          - align-self: start
+          - justify-self: start
+        launch_pad:
+          - align-self: start
+          - justify-self: start
+        location:
+          - align-self: start
+          - justify-self: start
+        target_date:
+          - align-self: start
+          - justify-self: start
+        tags:
+          - align-self: start
+          - justify-self: start
+    custom_fields:
+      provider: |
+        [[[
+          return `Provider: ${states['sensor.rocket_launch_4'].attributes["provider"]}`
+        ]]]
+      vehicle: |
+        [[[
+          return `Vehicle: ${states['sensor.rocket_launch_4'].attributes['vehicle']}`
+        ]]]
+      launch_pad: |
+        [[[
+          return `Launch Pad: ${states['sensor.rocket_launch_4'].attributes['launch_pad']}`
+        ]]]
+      location: |
+        [[[
+          return `Location: ${states['sensor.rocket_launch_4'].attributes['launch_location']}`
+        ]]]
+      target_date: |
+        [[[
+          return `Target Date: ${states['sensor.rocket_launch_4'].attributes['launch_date_target']}`
+        ]]]
+      tags: |
+        [[[
+          return `Tags: ${states['sensor.rocket_launch_4'].attributes['tags']}`
+        ]]]
+  - type: 'custom:button-card'
+    entity: sensor.rocket_launch_5
+    show_name: false
+    show_state: true
+    show_icon: false
+    layout: icon_state
+    styles:
+      card:
+        - font-size: 12px
+        - padding: 10px
+      grid:
+        - grid-template-areas: >-
+            "s" "provider" "vehicle" "launch_pad" "location" "target_date"
+            "tags"
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content min-content
+      state:
+        - font-weight: bold
+        - font-size: 16px
+        - align-self: start
+        - justify-self: start
+      custom_fields:
+        provider:
+          - align-self: start
+          - justify-self: start
+        vehicle:
+          - align-self: start
+          - justify-self: start
+        launch_pad:
+          - align-self: start
+          - justify-self: start
+        location:
+          - align-self: start
+          - justify-self: start
+        target_date:
+          - align-self: start
+          - justify-self: start
+        tags:
+          - align-self: start
+          - justify-self: start
+    custom_fields:
+      provider: |
+        [[[
+          return `Provider: ${states['sensor.rocket_launch_5'].attributes["provider"]}`
+        ]]]
+      vehicle: |
+        [[[
+          return `Vehicle: ${states['sensor.rocket_launch_5'].attributes['vehicle']}`
+        ]]]
+      launch_pad: |
+        [[[
+          return `Launch Pad: ${states['sensor.rocket_launch_5'].attributes['launch_pad']}`
+        ]]]
+      location: |
+        [[[
+          return `Location: ${states['sensor.rocket_launch_5'].attributes['launch_location']}`
+        ]]]
+      target_date: |
+        [[[
+          return `Target Date: ${states['sensor.rocket_launch_5'].attributes['launch_date_target']}`
+        ]]]
+      tags: |
+        [[[
+          return `Tags: ${states['sensor.rocket_launch_5'].attributes['tags']}`
+        ]]]
+```
