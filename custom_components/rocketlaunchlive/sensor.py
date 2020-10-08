@@ -1,0 +1,162 @@
+"""Definition and setup of the Space Launch Live Sensors for Home Assistant."""
+
+import datetime
+import logging
+
+from homeassistant.components.sensor import ENTITY_ID_FORMAT
+from homeassistant.const import LENGTH_KILOMETERS, SPEED_KILOMETERS_PER_HOUR, ATTR_NAME
+from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.update_coordinator import (
+    CoordinatorEntity,
+    DataUpdateCoordinator,
+    UpdateFailed,
+)
+from . import RocketLaunchLiveUpdater
+
+from .const import ATTR_IDENTIFIERS, ATTR_MANUFACTURER, ATTR_MODEL, DOMAIN, COORDINATOR
+
+_LOGGER = logging.getLogger(__name__)
+
+
+async def async_setup_entry(hass, entry, async_add_entities):
+    """Set up the sensor platforms."""
+
+    coordinator = hass.data[DOMAIN][entry.entry_id][COORDINATOR]
+    sensors = []
+    sensor_count = 0
+
+    for launch_id, launch in coordinator.data.items():
+        sensor_count += 1
+        sensors.append(
+            RocketLaunchSensor(
+                coordinator,
+                sensor_count,
+                launch_id,
+                launch,
+            )
+        )
+
+    async_add_entities(sensors)
+
+class RocketLaunchSensor(CoordinatorEntity):
+    """Defines a Rocket Launch Live launch sensor."""
+
+    def __init__(
+        self,
+        coordinator: RocketLaunchLiveUpdater,
+        sensor_count: int,
+        launch_id: str,
+        launch: dict,
+    ):
+        """Initialize entity."""
+
+        super().__init__(coordinator=coordinator)
+
+        self._name = f"Rocket Launch {sensor_count}"
+        self._unique_id = f"rocket_launch_{sensor_count}"
+        self._state = self.get_state(launch)
+        self._icon = "mdi:rocket"
+        self._launch_id = launch_id
+        self._attrs = self.get_attrs(launch)
+
+    @property
+    def unique_id(self):
+        """Return the Home Assistant unique id."""
+        return self._unique_id
+
+    @property
+    def name(self):
+        """Return the name for Home Assistant."""
+        return self._name
+
+    @property
+    def icon(self):
+        """Return the assigned icon."""
+        return self._icon
+
+    @property
+    def device_state_attributes(self):
+        """Return the device attributes."""
+        attrs = self.get_attrs(self.coordinator.data[self._launch_id])
+        return attrs
+
+    @property
+    def device_info(self):
+        """Return the device info for entity registry."""
+        return {
+            ATTR_IDENTIFIERS: {(DOMAIN, "next_5_launches")},
+            ATTR_NAME: "Rocket Launch Live",
+            ATTR_MANUFACTURER: "rocketlaunch.live",
+            ATTR_MODEL: "Next 5 Launches",
+        }
+
+    @property
+    def state(self):
+        """Return the current state of the sensor."""
+        state = self.get_state(self.coordinator.data[self._launch_id])
+        return state
+
+    async def async_update(self):
+        """Update the data coordinator."""
+        await self.coordinator.async_request_refresh()
+
+    async def async_added_to_hass(self):
+        """Subscribe to updates."""
+        self.async_on_remove(
+            self.coordinator.async_add_listener(self.async_write_ha_state)
+        )    
+
+    def get_state(self, launch:dict):
+        """Return a standardized string state."""
+
+        return f"{launch['name']} ({launch['provider']['name']})"
+
+    def get_attrs(self, launch:dict):
+        """Return standardized attrs."""
+
+        attrs = {}
+        attrs["name"] = launch["name"]
+        attrs["provider"] = launch["provider"]["name"]
+        attrs["vehicle"] = launch["vehicle"]["name"]
+        attrs["launch_pad"] = f"{launch['pad']['location']['name']} ({launch['pad']['name']})"
+        attrs["launch_location"] = launch["pad"]["location"]["country"]
+
+        missions = ""
+        for mission in launch["missions"]:
+            missions = f"{missions}{mission['name']} |"
+        attrs["launch_missions"] = missions
+        attrs["launch_description"] = launch["launch_description"]
+
+        if launch.get("t0"):
+            attrs["launch_t0"] = datetime.datetime.fromtimestamp(
+                launch["t0"]
+            ).strftime("%I:%M %p")
+            attrs["launch_t0_unix"] = launch["t0"]
+        else:
+            attrs["launch_t0"] = "NA"
+            attrs["launch_t0_unix"] = "NA"
+
+        if launch["est_date"].get("month"):
+            attrs["est_launch_date"] = datetime.datetime.fromisoformat(
+                f"{launch['est_date']['year']}-{launch['est_date']['month']}-{launch['est_date']['day']}"
+            )
+        else:
+            attrs["est_launch_date"] = "NA"
+
+        attrs["launch_date_target"] = launch["date_str"]
+
+        tag_string = ""
+        for tag in launch["tags"]:
+            tag_string = f"{tag_string}{tag['text']} | "
+
+        attrs["tags"] = tag_string[:255] if len(tag_string) > 255 else tag_string
+
+        if launch.get("weather_summary"):
+            attrs["weather_summary"] = launch["weather_summary"].replace("\n", ", ")
+        else:
+            attrs["weather_summary"] = "TBD"
+        attrs["weather_temp"] = launch["weather_temp"]
+        attrs["last_updated"] = launch["modified"]
+
+        return attrs
+
