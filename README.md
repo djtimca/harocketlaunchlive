@@ -34,6 +34,9 @@ Enjoy!
 
 You can easily display the data using the custom:button-card lovelace template from HACS:
 
+![Image of Lovelace]
+(https://github.com/djtimca/harocketlaunchlive/images/lovelace.png)
+
 ```
 type: vertical-stack
 title: Next 5 Rocket Launches
