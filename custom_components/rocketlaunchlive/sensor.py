@@ -143,6 +143,7 @@ class RocketLaunchSensor(CoordinatorEntity):
             launch_timestamp = as_timestamp(dateutil.parser.parse(launch["win_open"]))
             launch_target = as_local(dateutil.parser.parse(launch["win_open"]))
             attrs["launch_target"] = launch_target.strftime("%d-%b-%y %I:%M %p")
+            attrs["launch_target_timestamp"] = int(launch_timestamp)
 
             if launch_timestamp < (time.time() + (24 * 60 * 60)) and launch_timestamp > time.time():
                 attrs["launch_24h_warning"] = "true"
