@@ -138,6 +138,7 @@ class RocketLaunchSensor(CoordinatorEntity):
 
         attrs["launch_24h_warning"] = "false"
         attrs["launch_20m_warning"] = "false"
+        attrs["launch_target_timestamp"] = ""
 
         if launch.get("win_open"):
             launch_timestamp = as_timestamp(dateutil.parser.parse(launch["win_open"]))
