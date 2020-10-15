@@ -1,14 +1,20 @@
 {
     "config": {
         "abort": {
-            "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]",
             "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]"
         },
+        "error": {
+            "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+            "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+            "unknown": "[%key:common::config_flow::error::unknown%]"
+        },
         "step": {
-            "confirm": {
-                "description": "Are you sure you want to install the Rocket Launch Live integration?"
+            "user": {
+                "data": {
+                    "api_key": "Optional: Enter your paid RocketLaunch.live API key."
+                }
             }
         }
     },
-    "title": "Rocket Launch Live - Next 5 Launches"
+    "title": "RocketLaunchLive - Next 5 Launches"
 }

@@ -26,7 +26,13 @@ Go to Configuration -> Integrations and click the + to add a new integration.
 
 Search for Rocket Launch Live and you will see the integration available.
 
-Click add, confirm you want to install, and voila... you have the status of the next 5 launches as sensors in your Home Assistant.
+#### Free API Use:
+Click add, leave the API key blank, confirm you want to install, and voila... you have the status of the next 5 launches as sensors in your Home Assistant.
+
+#### Paid API Use:
+Click add, enter your paid API key from https://rocketlaunch.live, confirm your installation, and you are all set.
+
+Note: Free API use does not have access to the media links, so the media attribute will always remain blank if you have not paid for access.
 
 Enjoy!
 

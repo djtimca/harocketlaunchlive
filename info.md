@@ -7,4 +7,8 @@ Once installed, go to Configuration -> Integrations and click the + to add a new
 
 Search for Rocket Launch Live and click to select the integration.
 
-Confirm that you want to install and you're done!
+To use the Free API (no media links) leave the API Key blank and click install.
+
+To use the Paid API (with media links) sign up and register at https://rocketlaunch.live and enter your created API key, then click install.
+
+Note: If you have previously installed this integration and want to use the paid API you will need to remove the integration and reinstall it to get access.

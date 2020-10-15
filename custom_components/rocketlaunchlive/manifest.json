@@ -4,7 +4,7 @@
     "config_flow": true,
     "documentation": "https://github.com/djtimca/harocketlaunchlive",
     "requirements": [
-      "rocketlaunchlive==0.0.1"
+      "rocketlaunchlive==0.0.2"
     ],
     "ssdp": [],
     "zeroconf": [],

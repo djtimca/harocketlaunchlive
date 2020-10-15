@@ -29,7 +29,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up Rocket Launch Live from a config entry."""
     polling_interval = 60
 
-    api = RocketLaunchLive()
+    conf = entry.data
+
+    if "api_key" in conf:
+        api = RocketLaunchLive(key=conf["api_key"])
+    else:
+        api = RocketLaunchLive()
 
     try:
         await api.get_next_launches()

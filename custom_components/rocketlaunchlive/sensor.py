@@ -2,7 +2,10 @@
 
 import datetime
 import logging
+import dateutil
+import time
 
+from homeassistant.util.dt import as_local, as_timestamp
 from homeassistant.components.sensor import ENTITY_ID_FORMAT
 from homeassistant.const import LENGTH_KILOMETERS, SPEED_KILOMETERS_PER_HOUR, ATTR_NAME
 from homeassistant.helpers.entity import Entity
@@ -126,6 +129,29 @@ class RocketLaunchSensor(CoordinatorEntity):
             missions = f"{missions}{mission['name']} |"
         attrs["launch_missions"] = missions
         attrs["launch_description"] = launch["launch_description"]
+
+        attrs["launch_media_link"] = ""
+
+        for this_media in launch["media"]:
+            if this_media.get("ldfeatured"):
+                attrs["launch_media_link"] = f"https://www.youtube.com/watch?v={this_media.get('youtube_vidid')}"
+
+        attrs["launch_24h_warning"] = "false"
+        attrs["launch_20m_warning"] = "false"
+
+        if launch.get("win_open"):
+            launch_timestamp = as_timestamp(dateutil.parser.parse(launch["win_open"]))
+            launch_target = as_local(dateutil.parser.parse(launch["win_open"]))
+            attrs["launch_target"] = launch_target.strftime("%d-%b-%y %I:%M %p")
+
+            if launch_timestamp < (time.time() + (24 * 60 * 60)) and launch_timestamp > time.time():
+                attrs["launch_24h_warning"] = "true"
+
+            if launch_timestamp < (time.time() + (20 * 60)) and launch_timestamp > time.time():
+                attrs["launch_20m_warning"] = "true"
+            
+        else:
+            attrs["launch_target"] = "NA"
 
         if launch.get("t0"):
             attrs["launch_t0"] = datetime.datetime.fromtimestamp(
