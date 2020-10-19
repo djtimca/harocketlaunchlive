@@ -164,7 +164,7 @@ class RocketLaunchSensor(CoordinatorEntity):
             attrs["launch_t0"] = "NA"
             attrs["launch_t0_unix"] = "NA"
 
-        if launch["est_date"].get("month"):
+        if launch["est_date"].get("year") and launch["est_date"].get("month") and launch["est_date"].get("day"):
             attrs["est_launch_date"] = datetime.datetime.fromisoformat(
                 f"{launch['est_date']['year']}-{launch['est_date']['month']}-{launch['est_date']['day']}"
             )
