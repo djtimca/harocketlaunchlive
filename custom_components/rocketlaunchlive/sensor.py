@@ -59,7 +59,7 @@ class RocketLaunchSensor(CoordinatorEntity):
         self._unique_id = f"rocket_launch_{sensor_count}"
         self._state = self.get_state(launch)
         self._icon = "mdi:rocket"
-        self._launch_id = launch_id
+        self._launch_id = sensor_count -1
         self._attrs = self.get_attrs(launch)
 
     @property

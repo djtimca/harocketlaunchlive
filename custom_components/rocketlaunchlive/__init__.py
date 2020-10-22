@@ -121,7 +121,9 @@ class RocketLaunchLiveUpdater(DataUpdateCoordinator):
             raise ConfigEntryNotReady from error
 
         launches = {}
+        launch_id = 0
         for launch in rocket_data["result"]:
-            launches[launch["id"]] = launch
+            launches[launch_id] = launch
+            launch_id += 1
 
         return launches
