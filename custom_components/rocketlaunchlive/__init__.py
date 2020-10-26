@@ -125,5 +125,4 @@ class RocketLaunchLiveUpdater(DataUpdateCoordinator):
         for launch in rocket_data["result"]:
             launches[launch_id] = launch
             launch_id += 1
-
         return launches
