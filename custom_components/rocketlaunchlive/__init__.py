@@ -7,7 +7,7 @@ from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.exceptions import ConfigEntryNotReady, PlatformNotReady
 
 from rocketlaunchlive import RocketLaunchLive
@@ -118,7 +118,7 @@ class RocketLaunchLiveUpdater(DataUpdateCoordinator):
             raise PlatformNotReady from error
         except ValueError as error:
             _LOGGER.info(f"Rocket Launch Live API: {error}")
-            raise ConfigEntryNotReady from error
+            raise UpdateFailed from error
 
         launches = {}
         launch_id = 0
