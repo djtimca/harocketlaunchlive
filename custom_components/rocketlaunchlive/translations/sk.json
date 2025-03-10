@@ -1,10 +1,10 @@
 {
-  "title": "Rocket Launch Live - Next 5 Launches",
+  "title": "Štart Rakiet Živé vysielanie - Nasledujúcich 5 štartov",
   "config": {
     "step": {
       "user": {
         "data": {
-          "api_key": "Optional: Enter your paid RocketLaunch.live API key."
+          "api_key": "Voliteľné: Zadajte svoj platený RocketLaunch.live API kľúč."
         }
       }
     },
