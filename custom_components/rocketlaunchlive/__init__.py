@@ -41,21 +41,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     except ConnectionError as error:
         _LOGGER.debug(f"Rocket Launch Live API: {error}")
         raise PlatformNotReady from error
-        return False
     except ValueError as error:
         _LOGGER.debug(f"Rocket Launch Live API: {error}")
         raise ConfigEntryNotReady from error
-        return False
 
     coordinator = RocketLaunchLiveUpdater(
-        hass, 
-        api=api, 
-        name="RocketLaunchLive", 
+        hass,
+        api=api,
+        name="RocketLaunchLive",
         polling_interval=polling_interval,
     )
 
     await coordinator.async_refresh()
-    
+
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
@@ -110,11 +108,14 @@ class RocketLaunchLiveUpdater(DataUpdateCoordinator):
         try:
             rocket_data = await self.api.get_next_launches()
         except ConnectionError as error:
-            _LOGGER.info(f"Rocket Launch Live API: {error}")
-            raise PlatformNotReady from error
+            _LOGGER.debug(f"Rocket Launch Live API: {error}")
+            raise UpdateFailed(f"Connection error: {error}") from error
         except ValueError as error:
-            _LOGGER.info(f"Rocket Launch Live API: {error}")
-            raise UpdateFailed from error
+            _LOGGER.debug(f"Rocket Launch Live API: {error}")
+            raise UpdateFailed(f"Invalid response: {error}") from error
+
+        if not isinstance(rocket_data, dict) or "result" not in rocket_data:
+            raise UpdateFailed(f"API returned no result: {rocket_data}")
 
         launches = {}
         launch_id = 0
